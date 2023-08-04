@@ -30,8 +30,8 @@ export default function TaskCard({ task }) {
     selectedDays.length === 1
       ? selectedDays[0]
       : selectedDays.length === 8
-      ? 'Toda la semana'
-      : selectedDays.map((day, index) => {
+        ? 'Toda la semana'
+        : selectedDays.map((day, index) => {
           if (index === selectedDays.length - 2) {
             return `${day} y `;
           } else if (index === selectedDays.length - 1) {
@@ -153,8 +153,8 @@ export default function TaskCard({ task }) {
         </Stack>
       </CardBody>
       <Divider />
-      <CardFooter className='flex flex-col'>
-        <Text as='sup'>Created: {createdAtToString}</Text>
+      <CardFooter className='flex flex-col' p={2}>
+        <Text as='small'>Created: {createdAtToString}</Text>
         {isCompleted && (
           <Badge width='fit-content' colorScheme='green'>
             Completed

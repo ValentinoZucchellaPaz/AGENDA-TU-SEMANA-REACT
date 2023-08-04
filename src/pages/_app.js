@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
       <ChakraProvider>
         <Header />
         <main
-          className={`flex min-h-screen flex-col items-center justify-start gap-5 px-5 md:px-24 ${inter.className} bg-secondary relative`}
+          className={`flex min-h-screen  flex-col items-center gap-5 px-5 md:px-24 ${inter.className} bg-secondary relative`}
         >
           <Component {...pageProps} />
         </main>

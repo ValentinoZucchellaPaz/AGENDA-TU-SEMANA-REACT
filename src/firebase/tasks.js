@@ -6,7 +6,6 @@ import {
   getDoc,
   getDocs,
   onSnapshot,
-  orderBy,
   query,
   updateDoc,
   where,
@@ -61,18 +60,20 @@ export function addTask({
 }
 
 export function ListenTasks(callback, onErrorCallback, userEmail) {
-  const tasksRef = collection(db, 'tasks');
-  const queryRef = query(tasksRef, where('creator', '==', userEmail));
-  return onSnapshot(
-    queryRef,
-    ({ docs }) => {
-      const newTasks = docs.map(mapTasksToArray);
-      callback(newTasks);
-    },
-    (error) => {
-      onErrorCallback(error);
-    },
-  );
+  return new Promise((resolve, reject) => {
+    const tasksRef = collection(db, 'tasks');
+    const queryRef = query(tasksRef, where('creator', '==', userEmail));
+    resolve(onSnapshot(
+      queryRef,
+      ({ docs }) => {
+        const newTasks = docs.map(mapTasksToArray);
+        callback(newTasks);
+      },
+      (error) => {
+        onErrorCallback(error);
+      },
+    ))
+  })
 }
 
 export function deleteTaskById(id) {
@@ -107,4 +108,16 @@ export function toggleCompleteTask(id, prev) {
     const docRef = doc(db, 'tasks', id);
     updateDoc(docRef, { isCompleted: !prev }).then(resolve).catch(reject);
   });
+}
+
+export function deleteAllTasks(creator) {
+  return new Promise((resolve, reject) => {
+    const q = query(collection(db, 'tasks'), where('creator', '==', creator))
+    getDocs(q).then(({ docs }) => {
+      const tasksIdToDel = docs.map(doc => doc.id)
+      tasksIdToDel.forEach((id) => {
+        deleteTaskById(id).then(resolve)
+      })
+    })
+  })
 }

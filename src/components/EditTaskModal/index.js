@@ -29,13 +29,12 @@ export default function EditTaskModal({ task }) {
       >
         <AlertDialogOverlay />
 
-        <AlertDialogContent>
-          <AlertDialogHeader>Edit Task</AlertDialogHeader>
+        <AlertDialogContent px={6} w='fit-content' maxW='90vw'>
+          <AlertDialogHeader py={2}>Editar Tarea</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
             <Form
               task={task}
-              heading='Editar tarea'
               submitButton={
                 <AlertDialogFooter>
                   <Button ref={cancelRef} onClick={onClose}>

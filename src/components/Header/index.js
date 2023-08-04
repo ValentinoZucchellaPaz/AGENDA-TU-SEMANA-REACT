@@ -11,6 +11,7 @@ import {
   useDisclosure,
   Button,
   Tooltip,
+  Heading,
 } from '@chakra-ui/react';
 
 export default function Header() {
@@ -18,7 +19,7 @@ export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <header className='flex flex-row justify-center items-center relative h-14 w-full text-white bg-primary'>
-      <h2>ORGANIZA TU SEMANA</h2>
+      <Heading size={'md'}>ORGANIZA TU SEMANA</Heading>
       {user && (
         <div className='absolute top-3 right-4 flex flex-row gap-3'>
           <Tooltip hasArrow label='Cambiar cuenta'>

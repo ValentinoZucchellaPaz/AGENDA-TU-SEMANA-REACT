@@ -117,7 +117,7 @@ export default function Form({ task, submitButton, heading }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className='w-full flex flex-col gap-3 justify-center items-center px-8 py-3'
+      className=' w-fit flex flex-col gap-3 justify-center items-center  py-3 mx-auto'
     >
       <Heading size={'md'}>{heading}</Heading>
       <FormControl isRequired>
@@ -172,10 +172,10 @@ export default function Form({ task, submitButton, heading }) {
               mx={'auto'}
               w={'fit-content'}
               templateColumns={{
-                base: 'repeat(2, 1fr)',
-                sm: 'repeat(3, 1fr)',
-                md: 'repeat(3, 1fr)',
-                lg: 'repeat(5, 1fr)',
+                base: 'repeat(2, minmax(0, 1fr))',
+                sm: 'repeat(3, minmax(0, 1fr))',
+                md: 'repeat(3, minmax(0, 1fr))',
+                lg: 'repeat(5, minmax(0, 1fr))',
               }}
               gap={4}
             >

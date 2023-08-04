@@ -1,3 +1,4 @@
+import { headings } from '@/constants/login';
 import useUser from '@/hooks/useUser';
 import {
   Button,
@@ -7,10 +8,10 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
 
 export default function AuthForm({ authParam }) {
   const { handleLogin, handleSignUp, error } = useUser();
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,9 +19,9 @@ export default function AuthForm({ authParam }) {
     const formData = new FormData(form);
     const username = formData.get('username');
     const password = formData.get('password');
-    if (authParam === 'Login') {
+    if (authParam === headings.login) {
       handleLogin(username, password);
-    } else if (authParam === 'Sign up') {
+    } else if (authParam === headings.signUp) {
       handleSignUp(username, password);
     }
   }
@@ -33,7 +34,7 @@ export default function AuthForm({ authParam }) {
 
       <FormControl isRequired>
         <FormLabel requiredIndicator=''>Email</FormLabel>
-        <Input name='username' type='text' placeholder='Ej. email@gmail.com' />
+        <Input name='username' type='email' placeholder='Ej. email@gmail.com' />
       </FormControl>
       <FormControl isRequired>
         <FormLabel requiredIndicator=''>Contraseña</FormLabel>
