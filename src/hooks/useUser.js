@@ -13,10 +13,10 @@ export default function useUser() {
   const [error, setError] = useState(null);
   const router = useRouter();
 
+  // hace login y tmb maneja cualquier error y lo devuelve en obj
   function handleLogin(email, password) {
     LogWithEmail(email, password)
       .then((res) => {
-        console.log(res);
         router.push('/');
         setUser(res);
       })
@@ -30,10 +30,10 @@ export default function useUser() {
       });
   }
 
+  // hace sign up y login juntos, tmb maneja cualquier error y lo devuelve en obj
   function handleSignUp(email, password) {
     SignUpWithEmail(email, password)
       .then((res) => {
-        console.log(res);
         handleLogin(email, password);
       })
       .catch((err) => {
@@ -54,7 +54,6 @@ export default function useUser() {
 
   useEffect(() => {
     onAuthStateChangeOfUser(setUser);
-    console.log(user);
   }, []);
 
   return { user, handleLogin, handleSignUp, error, SignOut };
