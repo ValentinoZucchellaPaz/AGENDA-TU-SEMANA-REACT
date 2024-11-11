@@ -18,7 +18,7 @@ Abrir [http://localhost:3000](http://localhost:3000) en el navegador para ver lo
 
 ## Intuitivo
 Crea un usuario, entra, y ponte a escribir tareas. Cuando entres de nuevo no deberás registrarte.
-![Un pequeño tour por la app](/src/assets/so-easy-to-use.gif "Pequeño tour por la app")
+![Un pequeño tour por la app](/src/assets/demo_agenda_tu_semana_react.gif "Pequeño tour por la app")
 
 ## Funcionamiento y features
 
