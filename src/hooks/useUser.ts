@@ -8,9 +8,18 @@ import { useRouter } from 'next/router';
 import { signOut, UserCredential } from 'firebase/auth';
 import { auth } from '@/DAO/config';
 
-export default function useUser() {
+export default function useUser(): {
+  user: UserCredential | null,
+  handleLogin: (email: string, password: string) => void,
+  handleSignUp: (email: string, password: string) => void,
+  error: {
+    errorCode: string;
+    errorMessage: string;
+  } | null,
+  SignOut: () => void
+} {
   const [user, setUser] = useState<UserCredential | null>(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<{ errorCode: string, errorMessage: string } | null>(null);
   const router = useRouter();
 
   // hace login y tmb maneja cualquier error y lo devuelve en obj
@@ -21,11 +30,8 @@ export default function useUser() {
         setUser(res);
       })
       .catch((err) => {
-        const errorCode = err.code.split('/').pop().split('-').join(' ');
-        let errorMessage = err.message.replace('Firebase: ', '').split('(')[0];
-        if (errorMessage === 'Error ') {
-          errorMessage = null;
-        }
+        const errorCode: string = err.code.split('/').pop().split('-').join(' ');
+        const errorMessage: string = err.message.replace('Firebase: ', '').split('(')[0];
         setError({ errorCode, errorMessage });
       });
   }
@@ -37,11 +43,8 @@ export default function useUser() {
         handleLogin(email, password);
       })
       .catch((err) => {
-        const errorCode = err.code.split('/').pop().split('-').join(' ');
-        let errorMessage = err.message.replace('Firebase: ', '').split('(')[0];
-        if (errorMessage === 'Error ') {
-          errorMessage = null;
-        }
+        const errorCode: string = err.code.split('/').pop().split('-').join(' ');
+        let errorMessage: string = err.message.replace('Firebase: ', '').split('(')[0];
         setError({ errorCode, errorMessage });
       });
   }

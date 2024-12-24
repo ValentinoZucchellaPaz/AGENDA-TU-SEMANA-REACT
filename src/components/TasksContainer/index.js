@@ -25,9 +25,11 @@ import {
 import { DINAMIC_COUNTER } from '@/constants/states';
 
 export default function TasksContainer() {
+  // context y hooks
   const taskContext = useContext(TaskContext);
   const { tasks, setTasks, sortByDate, sortByName } = taskContext;
   const { user } = useUser();
+  // UI states
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSortedByDate, setIsSortedByDate] = useState(false);
@@ -57,16 +59,9 @@ export default function TasksContainer() {
     }
 
     user && fetchData();
-
-    return () => {
-      if (unsubscribe) {
-        console.log('unsubed');
-        unsubscribe();
-      }
-    }
   }, [user]);
 
-  // para que cuando se quieran eliminar todas se espere tres segundos
+  // cuando se quieran eliminar todas las tasks se espere tres segundos
   useEffect(() => {
     if (isOpen) {
       setIsButtonClikable(false)

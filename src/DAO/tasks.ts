@@ -13,15 +13,8 @@ import {
   where,
 } from 'firebase/firestore';
 import { db } from './config';
-import { DTOTask, Task } from '@/types';
+import { AddTaskType, DTOTask, EditTaskType, Task } from '@/types';
 import { Unsubscribe } from 'firebase/auth';
-
-// function mapTasksToArray(task) {
-//   const data = task.data();
-//   const id = task.id;
-
-//   return { id, ...data };
-// }
 
 export function getTasks(): Promise<DTOTask[]> {
   return new Promise((resolve, reject) => {
@@ -44,7 +37,7 @@ export function addTask({
   selectedDays,
   createdAt,
   creator
-}: Task): Promise<DocumentReference<DocumentData, DocumentData>> {
+}: AddTaskType): Promise<DocumentReference<DocumentData, DocumentData>> {
   return new Promise((resolve, reject) => {
     const tasksAddapted = collection(db, 'tasks');
     addDoc(tasksAddapted, {
@@ -105,22 +98,13 @@ export function deleteTaskById(id: string): Promise<boolean> {
   });
 }
 
-// {
-//   title,
-//     hourFrom,
-//     hourTo,
-//     selectedDays,
-//     createdAt,
-//     creator
-// }: Task
-
 export function editTask({
   id,
   title,
   hourFrom,
   hourTo,
-  selectedDays,
-}: Task): Promise<void> {
+  selectedDays
+}: EditTaskType): Promise<void> {
   return new Promise((resolve, reject) => {
     const docRef = doc(db, 'tasks', id);
     updateDoc(docRef, { title, hourTo, hourFrom, selectedDays })

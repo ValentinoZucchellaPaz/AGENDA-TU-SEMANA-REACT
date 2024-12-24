@@ -1,10 +1,10 @@
-import { Task } from '@/types';
-import React from 'react';
+import { Task, TaskContextType } from '@/types';
+import React, { FC, ReactNode } from 'react';
 import { createContext, useState } from 'react';
 
-export const TaskContext = createContext(null);
+export const TaskContext = createContext<TaskContextType | null>(null);
 
-export function TaskContextProvider({ children }) {
+export function TaskContextProvider({ children }: { children: ReactNode }): JSX.Element {
   const [tasks, setTasks] = useState<Task[]>([]);
   function sortByDate(state: boolean): void {
     console.log('sorted by date');

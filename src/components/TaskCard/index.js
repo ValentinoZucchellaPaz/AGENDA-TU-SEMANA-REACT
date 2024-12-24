@@ -55,8 +55,8 @@ export default function TaskCard({ task }) {
   }
   function handleDelete() {
     deleteTaskById(id)
-      .then(() =>
-        toast({
+      .then((success) =>
+        success && toast({
           title: `${title} eliminado`,
           status: 'success',
           duration: 3000,

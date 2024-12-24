@@ -1,4 +1,5 @@
 import { addTask, editTask } from '@/DAO/tasks';
+import { UseAsyncCreateType } from '@/types';
 
 export default function useAsyncCreate({
   title,
@@ -7,11 +8,11 @@ export default function useAsyncCreate({
   selectedDays,
   creator,
   task,
-}) {
+}: UseAsyncCreateType) {
   return new Promise((resolve, reject) => {
     if (task) {
       const { id } = task;
-      editTask({ title, hourFrom, hourTo, selectedDays, id })
+      editTask({ id, title, hourFrom, hourTo, selectedDays })
         .then(resolve)
         .catch(reject);
     } else {
