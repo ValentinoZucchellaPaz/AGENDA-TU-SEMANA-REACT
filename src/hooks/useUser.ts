@@ -3,18 +3,18 @@ import {
   LogWithEmail,
   SignUpWithEmail,
   onAuthStateChangeOfUser,
-} from '@/firebase/user';
+} from '@/DAO/user';
 import { useRouter } from 'next/router';
-import { signOut } from 'firebase/auth';
-import { auth } from '@/firebase/config';
+import { signOut, UserCredential } from 'firebase/auth';
+import { auth } from '@/DAO/config';
 
 export default function useUser() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserCredential | null>(null);
   const [error, setError] = useState(null);
   const router = useRouter();
 
   // hace login y tmb maneja cualquier error y lo devuelve en obj
-  function handleLogin(email, password) {
+  function handleLogin(email: string, password: string): void {
     LogWithEmail(email, password)
       .then((res) => {
         router.push('/');
@@ -31,9 +31,9 @@ export default function useUser() {
   }
 
   // hace sign up y login juntos, tmb maneja cualquier error y lo devuelve en obj
-  function handleSignUp(email, password) {
+  function handleSignUp(email: string, password: string): void {
     SignUpWithEmail(email, password)
-      .then((res) => {
+      .then(() => {
         handleLogin(email, password);
       })
       .catch((err) => {
@@ -46,9 +46,9 @@ export default function useUser() {
       });
   }
 
-  function SignOut() {
+  function SignOut(): void {
     signOut(auth)
-      .then((res) => setUser(null))
+      .then(() => setUser(null))
       .catch(() => console.log('no se pudo desloguear'));
   }
 

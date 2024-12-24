@@ -3,6 +3,8 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentData,
+  DocumentReference,
   getDoc,
   getDocs,
   onSnapshot,
@@ -11,15 +13,17 @@ import {
   where,
 } from 'firebase/firestore';
 import { db } from './config';
+import { DTOTask, Task } from '@/types';
+import { Unsubscribe } from 'firebase/auth';
 
-function mapTasksToArray(task) {
-  const data = task.data();
-  const id = task.id;
+// function mapTasksToArray(task) {
+//   const data = task.data();
+//   const id = task.id;
 
-  return { id, ...data };
-}
+//   return { id, ...data };
+// }
 
-export function getTasks() {
+export function getTasks(): Promise<DTOTask[]> {
   return new Promise((resolve, reject) => {
     const tasksRef = collection(db, 'tasks');
     getDocs(tasksRef)
@@ -39,8 +43,8 @@ export function addTask({
   hourTo,
   selectedDays,
   createdAt,
-  creator,
-}) {
+  creator
+}: Task): Promise<DocumentReference<DocumentData, DocumentData>> {
   return new Promise((resolve, reject) => {
     const tasksAddapted = collection(db, 'tasks');
     addDoc(tasksAddapted, {
@@ -53,20 +57,28 @@ export function addTask({
       creator,
     })
       .then((newDocRef) =>
-        resolve({ title, hourTo, hourFrom, selectedDays, newDocRef }),
+        resolve(newDocRef),
       )
       .catch((e) => reject(e));
   });
 }
 
-export function ListenTasks(callback, onErrorCallback, userEmail) {
+export function ListenTasks(
+  callback: CallableFunction,
+  onErrorCallback: CallableFunction,
+  userEmail: string): Promise<Unsubscribe> {
   return new Promise((resolve, reject) => {
     const tasksRef = collection(db, 'tasks');
     const queryRef = query(tasksRef, where('creator', '==', userEmail));
     resolve(onSnapshot(
       queryRef,
       ({ docs }) => {
-        const newTasks = docs.map(mapTasksToArray);
+        const newTasks = docs.map((task) => {
+          const data = task.data();
+          const id = task.id;
+
+          return { id, ...data };
+        });
         callback(newTasks);
       },
       (error) => {
@@ -76,7 +88,7 @@ export function ListenTasks(callback, onErrorCallback, userEmail) {
   })
 }
 
-export function deleteTaskById(id) {
+export function deleteTaskById(id: string): Promise<boolean> {
   return new Promise((resolve, reject) => {
     const docToDelete = doc(db, 'tasks', id);
     getDoc(docToDelete)
@@ -86,15 +98,29 @@ export function deleteTaskById(id) {
             resolve(true);
           });
         } else {
-          // eslint-disable-next-line prefer-promise-reject-errors
-          reject(`el documento con id ${id} no existe`);
+          reject(false);
         }
       })
       .catch((err) => reject(err));
   });
 }
 
-export function editTask({ title, hourFrom, hourTo, selectedDays, id }) {
+// {
+//   title,
+//     hourFrom,
+//     hourTo,
+//     selectedDays,
+//     createdAt,
+//     creator
+// }: Task
+
+export function editTask({
+  id,
+  title,
+  hourFrom,
+  hourTo,
+  selectedDays,
+}: Task): Promise<void> {
   return new Promise((resolve, reject) => {
     const docRef = doc(db, 'tasks', id);
     updateDoc(docRef, { title, hourTo, hourFrom, selectedDays })
@@ -103,14 +129,14 @@ export function editTask({ title, hourFrom, hourTo, selectedDays, id }) {
   });
 }
 
-export function toggleCompleteTask(id, prev) {
+export function toggleCompleteTask(id: string, prev: boolean): Promise<void> {
   return new Promise((resolve, reject) => {
     const docRef = doc(db, 'tasks', id);
     updateDoc(docRef, { isCompleted: !prev }).then(resolve).catch(reject);
   });
 }
 
-export function deleteAllTasks(creator) {
+export function deleteAllTasks(creator: string): Promise<boolean> {
   return new Promise((resolve, reject) => {
     const q = query(collection(db, 'tasks'), where('creator', '==', creator))
     getDocs(q).then(({ docs }) => {

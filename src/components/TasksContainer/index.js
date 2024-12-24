@@ -1,4 +1,4 @@
-import { ListenTasks, deleteAllTasks } from '@/firebase/tasks';
+import { ListenTasks, deleteAllTasks } from '@/DAO/tasks';
 import TaskCard from '../TaskCard';
 import { useContext, useEffect, useState } from 'react';
 import GridTasksLayout from '../GridTasksLayout';

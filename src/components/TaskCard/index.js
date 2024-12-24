@@ -1,4 +1,4 @@
-import { deleteTaskById, toggleCompleteTask } from '@/firebase/tasks';
+import { deleteTaskById, toggleCompleteTask } from '@/DAO/tasks';
 import { SmallAddIcon } from '@chakra-ui/icons';
 import {
   Card,
