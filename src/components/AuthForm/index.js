@@ -1,5 +1,5 @@
 import { headings } from '@/constants/login';
-import useUser from '@/hooks/useUser';
+import { useAuth } from '@/context/AuthContext';
 import {
   Button,
   FormControl,
@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function AuthForm({ authParam }) {
-  const { handleLogin, handleSignUp, error } = useUser();
+  const { handleLogin, handleSignUp, error } = useAuth();
 
 
   function handleSubmit(e) {

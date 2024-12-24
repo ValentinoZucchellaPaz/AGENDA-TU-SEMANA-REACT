@@ -15,10 +15,10 @@ import { sortWeekdays, weekDays } from './validations';
 import useAsyncCreate from '@/hooks/useAsyncCreate';
 import { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
-import useUser from '@/hooks/useUser';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Form({ task, submitButton, heading }) {
-  const { user } = useUser();
+  const { user } = useAuth();
   const [title, setTitle] = useState('');
   const [hourFrom, setHourFrom] = useState('00:00');
   const [hourTo, setHourTo] = useState('00:00');

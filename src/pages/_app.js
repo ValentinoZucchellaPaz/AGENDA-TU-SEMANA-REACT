@@ -3,15 +3,15 @@ import Header from '@/components/Header';
 import '@/styles/globals.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Inter } from 'next/font/google';
-import { TaskContextProvider } from '@/context/TasksContext';
 import { AuthProvider } from '@/context/AuthContext';
+import { TasksProvider } from '@/context/tasksContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function App({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <TaskContextProvider>
+      <TasksProvider>
         <ChakraProvider>
           <Header />
           <main
@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
           </main>
           <Footer />
         </ChakraProvider>
-      </TaskContextProvider>
+      </TasksProvider>
     </AuthProvider>
   );
 }

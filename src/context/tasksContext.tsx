@@ -4,7 +4,7 @@ import { createContext, useState } from 'react';
 
 export const TaskContext = createContext<TaskContextProps | null>(null);
 
-export function TaskContextProvider({ children }: { children: ReactNode }): JSX.Element {
+export function TasksProvider({ children }: { children: ReactNode }): JSX.Element {
   const [tasks, setTasks] = useState<Task[]>([]);
   function sortByDate(state: boolean): void {
     console.log('sorted by date');

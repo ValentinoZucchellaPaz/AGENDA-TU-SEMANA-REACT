@@ -1,9 +1,7 @@
 import { ListenTasks, deleteAllTasks } from '@/DAO/tasks';
 import TaskCard from '../TaskCard';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import GridTasksLayout from '../GridTasksLayout';
-import { TaskContext } from '@/context/TasksContext';
-import useUser from '@/hooks/useUser';
 import {
   Button,
   Heading,
@@ -23,12 +21,13 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { DINAMIC_COUNTER } from '@/constants/states';
+import { useAuth } from '@/context/AuthContext';
+import { useTasks } from '@/context/tasksContext';
 
 export default function TasksContainer() {
   // context y hooks
-  const taskContext = useContext(TaskContext);
-  const { tasks, setTasks, sortByDate, sortByName } = taskContext;
-  const { user } = useUser();
+  const { tasks, setTasks, sortByDate, sortByName } = useTasks();
+  const { user } = useAuth();
   // UI states
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,6 +58,7 @@ export default function TasksContainer() {
     }
 
     user && fetchData();
+    return () => unsubscribe()
   }, [user]);
 
   // cuando se quieran eliminar todas las tasks se espere tres segundos

@@ -2,16 +2,16 @@ import AuthForm from '@/components/AuthForm';
 import FormContainer from '@/components/FormContainer';
 import TasksContainer from '@/components/TasksContainer';
 import { headings } from '@/constants/login';
-import useUser from '@/hooks/useUser';
+import { useAuth } from '@/context/AuthContext';
 import { Button, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 export default function Home() {
-  const { user } = useUser();
+  const { user, loading } = useAuth()
   const router = useRouter();
 
   // devolver formulario de login si no esta logueado, si esta login renderiza resto de la app
-  if (user === null) {
+  if (user === null && !loading) {
     return (
       <section className='w-full h-[90vh] flex flex-col justify-center items-center gap-6'>
         <div className='w-full md:w-2/3 bg-darkGray flex flex-col gap-3 justify-center items-center px-8 py-3 mt-10 rounded-xl text-white'>

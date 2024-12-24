@@ -1,4 +1,3 @@
-import useUser from '@/hooks/useUser';
 import {
   Tag,
   Modal,
@@ -14,9 +13,10 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import Nav from '../Nav';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Header() {
-  const { user, SignOut } = useUser();
+  const { user, SignOut } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <header className={`grid ${user ? 'grid-cols-3 items-center justify-between' : 'place-content-center'} h-14 w-full text-white bg-primary md:px-10 px-2`}>

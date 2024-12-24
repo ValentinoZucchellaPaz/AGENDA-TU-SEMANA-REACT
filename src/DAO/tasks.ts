@@ -9,12 +9,12 @@ import {
   getDocs,
   onSnapshot,
   query,
+  Unsubscribe,
   updateDoc,
   where,
 } from 'firebase/firestore';
 import { db } from './config';
 import { AddTaskProps, DTOTask, EditTaskProps, Task } from '@/types';
-import { Unsubscribe } from 'firebase/auth';
 
 export function getTasks(): Promise<DTOTask[]> {
   return new Promise((resolve, reject) => {

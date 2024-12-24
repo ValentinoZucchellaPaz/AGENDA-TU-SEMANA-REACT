@@ -36,6 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             .then((res) => {
                 router.push('/');
                 setUser(res.user);
+                setLoading(false);
             })
             .catch((err) => {
                 const errorCode: string = err.code.split('/').pop().split('-').join(' ');
@@ -59,7 +60,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     function SignOut(): void {
         signOut(auth)
-            .then(() => setUser(null))
+            .then(() => {
+                setUser(null)
+                setLoading(true);
+                router.push('/')
+            })
             .catch(() => console.log('no se pudo desloguear'));
     }
 
