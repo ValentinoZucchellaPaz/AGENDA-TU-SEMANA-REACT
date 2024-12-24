@@ -13,55 +13,59 @@ import {
   Tooltip,
   Heading,
 } from '@chakra-ui/react';
+import Nav from '../Nav';
 
 export default function Header() {
   const { user, SignOut } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <header className='flex flex-row justify-center items-center relative h-14 w-full text-white bg-primary'>
-      <Heading size={'md'}>ORGANIZA TU SEMANA</Heading>
+    <header className={`grid ${user ? 'grid-cols-3 items-center justify-between' : 'place-content-center'} h-14 w-full text-white bg-primary md:px-10 px-2`}>
+      <Heading size={'md'} textAlign={'center'}>ORGANIZA TU SEMANA</Heading>
       {user && (
-        <div className='absolute top-3 right-4 flex flex-row gap-3'>
-          <Tooltip hasArrow label='Cambiar cuenta'>
-            <Tag
-              onClick={onOpen}
-              variant='subtle'
-              cursor='pointer'
-              colorScheme='facebook'
-              px={4}
-              py={2}
-            >
-              {user.email}
-            </Tag>
-          </Tooltip>
+        <>
+          <div className='flex flex-row justify-center gap-3'>
+            <Tooltip hasArrow label='Cambiar cuenta'>
+              <Tag
+                onClick={onOpen}
+                variant='subtle'
+                cursor='pointer'
+                colorScheme='facebook'
+                px={4}
+                py={2}
+              >
+                {user.email}
+              </Tag>
+            </Tooltip>
 
-          <Modal isOpen={isOpen} onClose={onClose} isCentered>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>¿Quieres cambiar de cuenta?</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                Dejarás de ver las tareas creadas en esta cuenta, ¿seguro
-                quieres hacerlo?
-              </ModalBody>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>¿Quieres cambiar de cuenta?</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  Dejarás de ver las tareas creadas en esta cuenta, ¿seguro
+                  quieres hacerlo?
+                </ModalBody>
 
-              <ModalFooter>
-                <Button mr={3} onClick={onClose}>
-                  Cancelar
-                </Button>
-                <Button
-                  colorScheme='red'
-                  onClick={() => {
-                    SignOut();
-                    onClose();
-                  }}
-                >
-                  Salir
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-        </div>
+                <ModalFooter>
+                  <Button mr={3} onClick={onClose}>
+                    Cancelar
+                  </Button>
+                  <Button
+                    colorScheme='red'
+                    onClick={() => {
+                      SignOut();
+                      onClose();
+                    }}
+                  >
+                    Salir
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </div>
+          <Nav />
+        </>
       )}
     </header>
   );

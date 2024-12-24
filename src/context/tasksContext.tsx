@@ -1,8 +1,8 @@
-import { Task, TaskContextType } from '@/types';
-import React, { FC, ReactNode } from 'react';
+import { Task, TaskContextProps } from '@/types';
+import React, { FC, ReactNode, useContext } from 'react';
 import { createContext, useState } from 'react';
 
-export const TaskContext = createContext<TaskContextType | null>(null);
+export const TaskContext = createContext<TaskContextProps | null>(null);
 
 export function TaskContextProvider({ children }: { children: ReactNode }): JSX.Element {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -28,3 +28,5 @@ export function TaskContextProvider({ children }: { children: ReactNode }): JSX.
     </TaskContext.Provider>
   );
 }
+
+export const useTasks = () => useContext(TaskContext)

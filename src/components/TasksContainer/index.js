@@ -2,7 +2,7 @@ import { ListenTasks, deleteAllTasks } from '@/DAO/tasks';
 import TaskCard from '../TaskCard';
 import { useContext, useEffect, useState } from 'react';
 import GridTasksLayout from '../GridTasksLayout';
-import { TaskContext } from '@/context/tasksContext';
+import { TaskContext } from '@/context/TasksContext';
 import useUser from '@/hooks/useUser';
 import {
   Button,
@@ -125,7 +125,7 @@ export default function TasksContainer() {
           ) : (
             <div className='flex flex-row justify-center gap-5 items-center'>
               <Heading textAlign={'center'} size={'md'}>
-                Estas son tus tareas
+                Estas son tus tareas semanales
               </Heading>
               <Menu>
                 <MenuButton as={Button}>Ordernar por</MenuButton>

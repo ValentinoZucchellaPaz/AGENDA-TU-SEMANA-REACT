@@ -1,5 +1,5 @@
 import { addTask, editTask } from '@/DAO/tasks';
-import { UseAsyncCreateType } from '@/types';
+import { UseAsyncCreateProps } from '@/types';
 
 export default function useAsyncCreate({
   title,
@@ -8,7 +8,7 @@ export default function useAsyncCreate({
   selectedDays,
   creator,
   task,
-}: UseAsyncCreateType) {
+}: UseAsyncCreateProps) {
   return new Promise((resolve, reject) => {
     if (task) {
       const { id } = task;

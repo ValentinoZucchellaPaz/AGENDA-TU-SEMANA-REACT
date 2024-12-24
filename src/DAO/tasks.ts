@@ -13,7 +13,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { db } from './config';
-import { AddTaskType, DTOTask, EditTaskType, Task } from '@/types';
+import { AddTaskProps, DTOTask, EditTaskProps, Task } from '@/types';
 import { Unsubscribe } from 'firebase/auth';
 
 export function getTasks(): Promise<DTOTask[]> {
@@ -37,7 +37,7 @@ export function addTask({
   selectedDays,
   createdAt,
   creator
-}: AddTaskType): Promise<DocumentReference<DocumentData, DocumentData>> {
+}: AddTaskProps): Promise<DocumentReference<DocumentData, DocumentData>> {
   return new Promise((resolve, reject) => {
     const tasksAddapted = collection(db, 'tasks');
     addDoc(tasksAddapted, {
@@ -104,7 +104,7 @@ export function editTask({
   hourFrom,
   hourTo,
   selectedDays
-}: EditTaskType): Promise<void> {
+}: EditTaskProps): Promise<void> {
   return new Promise((resolve, reject) => {
     const docRef = doc(db, 'tasks', id);
     updateDoc(docRef, { title, hourTo, hourFrom, selectedDays })
