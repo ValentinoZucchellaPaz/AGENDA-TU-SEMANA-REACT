@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react';
 import { DINAMIC_COUNTER } from '@/constants/states';
 import { useAuth } from '@/context/AuthContext';
-import { useTasks } from '@/context/tasksContext';
+import { useTasks } from '@/context/TasksContext';
 
 export default function TasksContainer() {
   // context y hooks
@@ -48,9 +48,11 @@ export default function TasksContainer() {
       setLoading(true);
 
       try {
+        console.log(tasks);
         unsubscribe = await ListenTasks(setTasks, setError, user?.email);
+        console.log(tasks);
       } catch (error) {
-        setError(true);
+        setError(error);
         console.error('Error al obtener los datos:', error);
       } finally {
         setLoading(false);
@@ -58,7 +60,8 @@ export default function TasksContainer() {
     }
 
     user && fetchData();
-    return () => unsubscribe()
+
+    return () => { unsubscribe && unsubscribe() }
   }, [user]);
 
   // cuando se quieran eliminar todas las tasks se espere tres segundos

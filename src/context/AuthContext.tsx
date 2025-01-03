@@ -62,7 +62,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signOut(auth)
             .then(() => {
                 setUser(null)
-                setLoading(true);
                 router.push('/')
             })
             .catch(() => console.log('no se pudo desloguear'));

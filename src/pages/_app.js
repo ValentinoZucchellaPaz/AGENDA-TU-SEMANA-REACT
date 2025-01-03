@@ -4,7 +4,7 @@ import '@/styles/globals.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Inter } from 'next/font/google';
 import { AuthProvider } from '@/context/AuthContext';
-import { TasksProvider } from '@/context/tasksContext';
+import { TasksProvider } from '@/context/TasksContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }) {
         <ChakraProvider>
           <Header />
           <main
-            className={`flex min-h-screen  flex-col items-center gap-5 px-5 md:px-24 ${inter.className} bg-secondary relative`}
+            className={`flex min-h-screen flex-col items-center gap-5 px-5 md:px-24 ${inter.className} bg-secondary relative`}
           >
             <Component {...pageProps} />
           </main>

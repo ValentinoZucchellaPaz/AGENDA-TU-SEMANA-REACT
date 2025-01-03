@@ -63,7 +63,7 @@ export function ListenTasks(
   return new Promise((resolve, reject) => {
     const tasksRef = collection(db, 'tasks');
     const queryRef = query(tasksRef, where('creator', '==', userEmail));
-    resolve(onSnapshot(
+    const unsub = onSnapshot(
       queryRef,
       ({ docs }) => {
         const newTasks = docs.map((task) => {
@@ -77,7 +77,8 @@ export function ListenTasks(
       (error) => {
         onErrorCallback(error);
       },
-    ))
+    )
+    resolve(unsub)
   })
 }
 

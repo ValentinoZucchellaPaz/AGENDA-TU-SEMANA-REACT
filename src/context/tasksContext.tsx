@@ -1,5 +1,5 @@
 import { Task, TaskContextProps } from '@/types';
-import React, { FC, ReactNode, useContext } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { createContext, useState } from 'react';
 
 export const TaskContext = createContext<TaskContextProps | null>(null);
@@ -29,4 +29,8 @@ export function TasksProvider({ children }: { children: ReactNode }): JSX.Elemen
   );
 }
 
-export const useTasks = () => useContext(TaskContext)
+export const useTasks = () => {
+  const context = useContext(TaskContext)
+  if (!context) throw new Error('useTasks se debe usar dentro de TasksProvider')
+  return context
+}
