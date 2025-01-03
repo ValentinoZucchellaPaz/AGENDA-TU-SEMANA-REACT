@@ -7,7 +7,7 @@ import { getAuth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyDqgAmJX9_5CZdHz_gIM42vFO1gpGwC-Ww',
+  apiKey: "AIzaSyDqgAmJX9_5CZdHz_gIM42vFO1gpGwC-Ww",
   authDomain: 'agenda-tu-semana.firebaseapp.com',
   projectId: 'agenda-tu-semana',
   storageBucket: 'agenda-tu-semana.appspot.com',
