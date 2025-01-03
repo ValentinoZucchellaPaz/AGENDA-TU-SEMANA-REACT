@@ -15,7 +15,6 @@ export function SignUpWithEmail(email, password) {
 }
 
 export function LogWithEmail(email, password) {
-  console.log(email, password);
   return new Promise((resolve, reject) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => resolve(userCredentials))
