@@ -3,6 +3,7 @@ import { listenTasks } from "@/firebase/tasks"
 import { Task } from "@/firebase/types"
 import { FirestoreError } from "firebase/firestore"
 import { useEffect, useState } from "react"
+import TaskCard from "./TaskCard"
 
 export default function TaskContainer() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -17,7 +18,7 @@ export default function TaskContainer() {
         <div>
             {error && <p>{error.message}</p>}
             {tasks.map(task => (
-                <p key={task.id}>{task.title}</p>
+                <TaskCard task={task} key={task.id} />
             ))}
         </div>
     )
