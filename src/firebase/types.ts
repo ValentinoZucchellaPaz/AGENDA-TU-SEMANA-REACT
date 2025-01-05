@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 
 export interface Task {
-    id?: string;
+    id: string;
     title: string,
     hourFrom: string,
     hourTo: string,

@@ -15,11 +15,13 @@ export default function TaskContainer() {
     }, [])
 
     return (
-        <div>
+        <section className="py-5">
             {error && <p>{error.message}</p>}
-            {tasks.map(task => (
-                <TaskCard task={task} key={task.id} />
-            ))}
-        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 mx-3 md:mx-12 xl:mx-28 auto-rows-auto">
+                {tasks.map(task => (
+                    <TaskCard task={task} key={task.id} />
+                ))}
+            </div>
+        </section>
     )
 }

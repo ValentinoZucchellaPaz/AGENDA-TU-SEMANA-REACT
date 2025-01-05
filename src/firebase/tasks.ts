@@ -8,7 +8,7 @@ export async function getTasks(): Promise<Task[]> {
     const snapshot = await getDocs(taskRef)
     const tasks = snapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data
+        ...doc.data()
     })) as Task[]
     return tasks
 }
@@ -16,7 +16,7 @@ export async function getTaskById(id: string): Promise<Task | null> {
     const taskRef = doc(db, "tasks", id)
     const snapshot = await getDoc(taskRef)
     if (snapshot.exists()) {
-        return { id: snapshot.id, ...snapshot.data } as Task
+        return { id: snapshot.id, ...snapshot.data() } as Task
     }
     return null
 }
@@ -43,8 +43,8 @@ export async function deleteAll(creatorEmail: string): Promise<void> {
 
 //edit
 export async function updateTask(id: string, updatedTask: Partial<Task>): Promise<void> {
-    const docRef = doc(db, "task", id)
-    await updateDoc(docRef, updatedTask)
+    const docRef = doc(db, "tasks", id)
+    await updateDoc(docRef, { ...updatedTask })
 }
 
 //listen
