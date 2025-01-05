@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/Header";
+import FirebaseErrorProvider from "@/context/firebaseErrorContext";
+import { FirebaseContentProvider } from "@/context/firebaseContentContext";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background dark:bg-[#202020]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background dark:bg-[#202020] flex flex-col min-h-screen`}
       >
         <ThemeProvider
           attribute="class"
@@ -35,10 +38,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
+          <FirebaseErrorProvider>
+            <FirebaseContentProvider>
+              <Header />
+              <main className="flex-1 p-4">
+                {children}
+              </main>
+              <Footer />
+            </FirebaseContentProvider>
+          </FirebaseErrorProvider>
         </ThemeProvider>
       </body>
-    </html>
+    </html >
   );
 }

@@ -16,7 +16,7 @@ import {
 import { Separator } from "./ui/separator";
 import { PlusIcon } from "lucide-react";
 import { Button } from "./ui/button";
-import { deleteTask, getTaskById, getTasks, toggleComplete, updateTask } from "@/firebase/tasks";
+import { deleteTask, toggleComplete } from "@/firebase/tasks";
 import { Badge } from "./ui/badge";
 
 
@@ -35,6 +35,10 @@ export default function TaskCard({ task }: { task: Task }) {
             }
         })
         return res
+    }
+
+    async function handleEdit() {
+
     }
 
     async function handleToggleComplete() {
@@ -64,7 +68,7 @@ export default function TaskCard({ task }: { task: Task }) {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuItem>Editar</DropdownMenuItem>
+                        <DropdownMenuItem >Editar</DropdownMenuItem>
                         <DropdownMenuItem onClick={handleToggleComplete}>{task.isCompleted ? 'Descompletar' : 'Completar'}</DropdownMenuItem>
                         <DropdownMenuItem onClick={handleDelete} className="text-red-500">Borrar</DropdownMenuItem>
                     </DropdownMenuContent>
@@ -79,7 +83,7 @@ export default function TaskCard({ task }: { task: Task }) {
             </CardContent>
             <Separator />
             <CardFooter className="py-2 px-4 flex flex-col items-start">
-                <p>Creado: {task.createdAt.toDate().toLocaleDateString()}, {task.createdAt.toDate().toLocaleTimeString()}</p>
+                <p>Creado: {task.createdAt.toDate().toLocaleString()}</p>
                 {task.isCompleted && <Badge variant='success'>COMPLETADA</Badge>}
             </CardFooter>
         </Card>
