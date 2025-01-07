@@ -1,5 +1,5 @@
 'use client'
-import AuthFallback from "@/components/AuthFallback";
+import AuthContainer from "@/components/AuthContainer";
 import TaskContainer from "@/components/TasksContainer";
 import { useFirebaseContentContext } from "@/context/firebaseContentContext";
 
@@ -7,7 +7,7 @@ export default function Home() {
   const { user } = useFirebaseContentContext()
 
   if (user === null) {
-    return <AuthFallback />
+    return <AuthContainer />
   }
   return (
     <TaskContainer />

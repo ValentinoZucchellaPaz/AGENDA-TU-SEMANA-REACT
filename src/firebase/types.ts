@@ -6,6 +6,7 @@ export interface Task {
     hourFrom: string,
     hourTo: string,
     selectedDays: string[],
+    // selectedDays: ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo', 'todos'],
     createdAt: Timestamp,
     creator: string,
     isCompleted: boolean

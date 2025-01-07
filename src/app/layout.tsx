@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import FirebaseErrorProvider from "@/context/firebaseErrorContext";
 import { FirebaseContentProvider } from "@/context/firebaseContentContext";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background dark:bg-[#202020] flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background dark:bg-[#202020] flex flex-col min-h-screen font-sans`}
       >
         <ThemeProvider
           attribute="class"
@@ -44,6 +45,7 @@ export default function RootLayout({
               <main className="flex-1 p-4">
                 {children}
               </main>
+              <Toaster />
               <Footer />
             </FirebaseContentProvider>
           </FirebaseErrorProvider>

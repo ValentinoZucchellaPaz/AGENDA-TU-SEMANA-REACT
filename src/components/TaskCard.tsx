@@ -18,9 +18,11 @@ import { PlusIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { deleteTask, toggleComplete } from "@/firebase/tasks";
 import { Badge } from "./ui/badge";
+import { useToast } from "@/hooks/use-toast";
 
 
 export default function TaskCard({ task }: { task: Task }) {
+    const { toast } = useToast()
 
     function formatDaysToString(): string {
         let res = ''
@@ -49,12 +51,9 @@ export default function TaskCard({ task }: { task: Task }) {
         }
     }
     async function handleDelete() {
-        try {
-            await deleteTask(task.id)
-
-        } catch (e) {
-            console.log(e);
-        }
+        deleteTask(task.id)
+            .then(success => toast({ title: `${task.title.toUpperCase()} eliminada correctamente` }))
+            .catch(err => toast({ title: `Ocurrio un error eliminando ${task.title}`, variant: 'destructive' }))
     }
 
     return (

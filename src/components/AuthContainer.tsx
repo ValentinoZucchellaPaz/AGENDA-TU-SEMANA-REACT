@@ -6,7 +6,7 @@ import { loginWithMail, signUpWithMail } from "@/firebase/auth";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
-export default function AuthFallback() {
+export default function AuthContainer() {
     const [login, setLogin] = useState(true)
     const router = useRouter()
     const { error, setError } = useFirebaseErrorContext()
@@ -32,7 +32,7 @@ export default function AuthFallback() {
     }
 
     return (<>
-        <div className='mx-auto md:w-2/3 bg-darkGray dark:bg-black flex flex-col gap-3 justify-center items-center px-8 py-3 mt-10 rounded-xl text-white shadow-lg'>
+        <div className='mx-auto md:w-2/3 flex flex-col gap-3 justify-center items-center px-8 py-3 mt-10 rounded-xl border border-gray-200 bg-white text-gray-950 shadow-sm dark:border-gray-800 dark:bg-gray-950 dark:text-gray-50'>
             <AuthForm login={login} handleSubmit={handleLogin} error={error} />
         </div>
         <div className="py-6 w-full flex flex-col items-center">
