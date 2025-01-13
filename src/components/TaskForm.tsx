@@ -6,16 +6,16 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { weekDays } from "@/lib/formValidations";
 import { ChevronDownIcon } from "lucide-react";
-import { addTask } from "@/firebase/tasks";
+import { addTask, updateTask } from "@/firebase/tasks";
 import { useFirebaseContentContext } from "@/context/firebaseContentContext";
 import { FirestoreError, Timestamp } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "./ui/badge";
 import { useFirebaseErrorContext } from "@/context/firebaseErrorContext";
 
-export default function TaskForm({ task }: { task?: Task }) {
+export default function TaskForm({ task, onFulfilled }: { task?: Task, onFulfilled?: CallableFunction }) {
     const [error, setError] = useState<string | null>(null)
-    const [checkbox, setCheckbox] = useState<string[]>([])
+    const [checkbox, setCheckbox] = useState<string[]>(task ? task.selectedDays : [])
     const [showDays, setShowDays] = useState(true)
     const { user } = useFirebaseContentContext()
     const { setError: setFirebaseError } = useFirebaseErrorContext()
@@ -74,23 +74,41 @@ export default function TaskForm({ task }: { task?: Task }) {
         const now = new Date()
         const createdAt = new Timestamp(now.getSeconds(), now.getMilliseconds())
 
-        addTask({
-            title,
-            hourFrom,
-            hourTo,
-            selectedDays: checkbox,
-            createdAt,
-            creator: user?.email as string,
-            isCompleted: false
-        }).then(fulfilled => {
-            toast({
-                title: `Tarea ${title} agregada correctamente`,
-                description: `creada en la fecha: ${now.toLocaleString()} con id ${fulfilled}`,
-                variant: 'success'
-            })
-            form.reset()
-            setCheckbox([])
-        }).catch(error => setFirebaseError(error))
+        if (task) {
+            updateTask(task.id, {
+                title,
+                hourFrom,
+                hourTo,
+                selectedDays: checkbox,
+            }).then(fulfilled => {
+                toast({
+                    title: `Tarea ${title} actualizada correctamente`,
+                    description: `tiene id ${task.id}`,
+                    variant: 'success'
+                })
+                if (onFulfilled) onFulfilled()
+                form.reset()
+                setCheckbox([])
+            }).catch(error => setFirebaseError(error))
+        } else {
+            addTask({
+                title,
+                hourFrom,
+                hourTo,
+                selectedDays: checkbox,
+                createdAt,
+                creator: user?.email as string,
+                isCompleted: false
+            }).then(fulfilled => {
+                toast({
+                    title: `Tarea ${title} agregada correctamente`,
+                    description: `creada en la fecha: ${now.toLocaleString()} con id ${fulfilled}`,
+                    variant: 'success'
+                })
+                form.reset()
+                setCheckbox([])
+            }).catch(error => setFirebaseError(error))
+        }
     }
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mx-auto py-5 justify-center items-center w-full">
@@ -98,15 +116,15 @@ export default function TaskForm({ task }: { task?: Task }) {
             {error && <p className="text-red-600">Parece que ocurrio un error: {error}</p>}
             <div className="w-full sm:w-[80%] lg:w-96">
                 <Label htmlFor="task-title">Título</Label>
-                <Input type="text" id="task-title" name="task-title" required placeholder="ej. ir a futbol" />
+                <Input type="text" id="task-title" name="task-title" required placeholder="ej. ir a futbol" defaultValue={task ? task.title : ''} />
             </div>
             <div className="w-full sm:w-[80%] lg:w-96">
                 <Label htmlFor="hour-from">Desde:</Label>
-                <Input type="time" id="hour-from" name="hour-from" required />
+                <Input type="time" id="hour-from" name="hour-from" required defaultValue={task ? task.hourFrom : ''} />
             </div>
             <div className="w-full sm:w-[80%] lg:w-96">
                 <Label htmlFor="hour-to">Hasta:</Label>
-                <Input type="time" id="hour-to" name="hour-to" required />
+                <Input type="time" id="hour-to" name="hour-to" required defaultValue={task ? task.hourTo : ''} />
             </div>
             <div className="w-full sm:w-[80%] lg:w-96">
                 <Label htmlFor="hour-to">Dias:</Label>

@@ -19,6 +19,20 @@ import { Button } from "./ui/button";
 import { deleteTask, toggleComplete } from "@/firebase/tasks";
 import { Badge } from "./ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+import TaskForm from "./TaskForm";
+import EditTaskDialog from "./EditTaskDialog";
 
 
 export default function TaskCard({ task }: { task: Task }) {
@@ -37,10 +51,6 @@ export default function TaskCard({ task }: { task: Task }) {
             }
         })
         return res
-    }
-
-    async function handleEdit() {
-
     }
 
     async function handleToggleComplete() {
@@ -67,7 +77,8 @@ export default function TaskCard({ task }: { task: Task }) {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuItem >Editar</DropdownMenuItem>
+                        <EditTaskDialog task={task} />
+
                         <DropdownMenuItem onClick={handleToggleComplete}>{task.isCompleted ? 'Descompletar' : 'Completar'}</DropdownMenuItem>
                         <DropdownMenuItem onClick={handleDelete} className="text-red-500">Borrar</DropdownMenuItem>
                     </DropdownMenuContent>

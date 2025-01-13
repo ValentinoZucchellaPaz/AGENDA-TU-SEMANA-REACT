@@ -2,7 +2,6 @@ import { FormEvent } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { useRouter } from "next/navigation";
 import { FirestoreError } from "firebase/firestore";
 
 interface FormProps {
@@ -12,8 +11,6 @@ interface FormProps {
 }
 
 export default function AuthForm({ login, handleSubmit, error }: FormProps) {
-    const router = useRouter()
-
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mx-auto py-5 justify-center items-center w-full">
             <h3 className="text-3xl font-bold">{login ? 'Login' : 'Crea tu cuentas'}</h3>

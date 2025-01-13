@@ -16,7 +16,6 @@ import { Button } from "./ui/button"
 export default function UserMenu({ userMail }: { userMail: string }) {
     const router = useRouter()
 
-
     return (
         <Dialog>
             <DialogTrigger asChild>
