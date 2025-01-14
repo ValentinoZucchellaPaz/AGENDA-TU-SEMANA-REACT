@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, ReactNode } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -7,7 +7,7 @@ import { FirestoreError } from "firebase/firestore";
 interface FormProps {
     login: boolean,
     handleSubmit: (e: FormEvent) => void,
-    error: FirestoreError | null
+    error: FirestoreError | null,
 }
 
 export default function AuthForm({ login, handleSubmit, error }: FormProps) {

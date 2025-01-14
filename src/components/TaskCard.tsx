@@ -67,36 +67,38 @@ export default function TaskCard({ task }: { task: Task }) {
     }
 
     return (
-        <Card className="flex flex-col shadow-lg">
-            <CardHeader className="px-4 flex flex-row justify-between items-center py-2">
-                <CardTitle>{task.title}</CardTitle>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant='ghost' size='sm'>
-                            <PlusIcon />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <EditTaskDialog task={task} />
+        <li>
+            <Card className="flex flex-col shadow-lg h-full">
+                <CardHeader className="px-4 flex flex-row justify-between items-center py-2">
+                    <CardTitle>{task.title}</CardTitle>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant='ghost' size='sm'>
+                                <PlusIcon />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <EditTaskDialog task={task} />
 
-                        <DropdownMenuItem onClick={handleToggleComplete}>{task.isCompleted ? 'Descompletar' : 'Completar'}</DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleDelete} className="text-red-500">Borrar</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                            <DropdownMenuItem onClick={handleToggleComplete}>{task.isCompleted ? 'Descompletar' : 'Completar'}</DropdownMenuItem>
+                            <DropdownMenuItem onClick={handleDelete} className="text-red-500">Borrar</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
-            </CardHeader>
-            <Separator />
-            <CardContent className="flex-1 py-2 px-4">
-                <p className="uppercase leading-relaxed"><span className="font-semibold">Desde:</span> {task.hourFrom}</p>
-                <p className="uppercase leading-relaxed"><span className="font-semibold">Hasta:</span> {task.hourTo}</p>
-                <p className="uppercase leading-relaxed"><span className="font-semibold">Días:</span> {formatDaysToString()}</p>
-            </CardContent>
-            <Separator />
-            <CardFooter className="py-2 px-4 flex flex-col items-start">
-                <p>Creado: {task.createdAt.toDate().toLocaleString()}</p>
-                {task.isCompleted && <Badge variant='success'>COMPLETADA</Badge>}
-            </CardFooter>
-        </Card>
+                </CardHeader>
+                <Separator />
+                <CardContent className="flex-1 py-2 px-4">
+                    <p className="uppercase leading-relaxed"><span className="font-semibold">Desde:</span> {task.hourFrom}</p>
+                    <p className="uppercase leading-relaxed"><span className="font-semibold">Hasta:</span> {task.hourTo}</p>
+                    <p className="uppercase leading-relaxed"><span className="font-semibold">Días:</span> {formatDaysToString()}</p>
+                </CardContent>
+                <Separator />
+                <CardFooter className="py-2 px-4 flex flex-col items-start">
+                    <p>Creado: {task.createdAt.toDate().toLocaleString()}</p>
+                    {task.isCompleted && <Badge variant='success'>COMPLETADA</Badge>}
+                </CardFooter>
+            </Card>
+        </li>
 
     )
 }

@@ -19,7 +19,9 @@ export default function UserMenu({ userMail }: { userMail: string }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant='outline'>{userMail}</Button>
+                <Button variant='outline' title={userMail}>
+                    <p className="max-w-32 overflow-hidden truncate">{userMail}</p>
+                </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

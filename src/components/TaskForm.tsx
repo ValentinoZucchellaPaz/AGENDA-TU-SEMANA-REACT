@@ -1,6 +1,6 @@
 'use client'
 import { Task } from "@/firebase/types"
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, ReactNode, useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -13,7 +13,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Badge } from "./ui/badge";
 import { useFirebaseErrorContext } from "@/context/firebaseErrorContext";
 
-export default function TaskForm({ task, onFulfilled }: { task?: Task, onFulfilled?: CallableFunction }) {
+interface TaskFormProps {
+    children?: ReactNode,
+    task?: Task,
+    onFulfilled?: CallableFunction
+}
+
+export default function TaskForm({ children, task, onFulfilled }: TaskFormProps) {
     const [error, setError] = useState<string | null>(null)
     const [checkbox, setCheckbox] = useState<string[]>(task ? task.selectedDays : [])
     const [showDays, setShowDays] = useState(true)
@@ -163,7 +169,11 @@ export default function TaskForm({ task, onFulfilled }: { task?: Task, onFulfill
                 }
             </div>
 
-            <Button type="submit" variant='outline' className="shadow-lg">{task ? 'Editar' : 'Crear'}</Button>
+
+            {
+                children ? children : <Button type="submit" variant='outline' className="shadow-lg">{task ? 'Editar' : 'Crear'}</Button>
+            }
+
         </form>
     )
 }
