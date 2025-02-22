@@ -2,10 +2,10 @@
 import { ToggleTheme } from "./ui/ToggleTheme";
 import Nav from "./Nav";
 import UserMenu from "./UserMenu";
-import { useFirebaseContentContext } from "@/context/firebaseContentContext";
+import { useUserContext } from "@/context/userContext";
 
 export default function Header() {
-    const { user } = useFirebaseContentContext()
+    const { user } = useUserContext()
 
     return (
         <header className="flex flex-row w-full justify-around items-center px-5 py-3 bg-primary dark:bg-black dark:bg-opacity-80">

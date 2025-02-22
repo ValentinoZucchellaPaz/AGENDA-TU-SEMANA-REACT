@@ -15,6 +15,12 @@ export function logout(): void {
     signOut(auth)
 }
 
-export function userChangeListener(setUser: React.Dispatch<React.SetStateAction<User | null>>): Unsubscribe {
-    return onAuthStateChanged(auth, setUser)
+export function userChangeListener(
+    setUser: React.Dispatch<React.SetStateAction<User | null>>,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+): Unsubscribe {
+    return onAuthStateChanged(auth, (user) => {
+        setUser(user)
+        setLoading(false)
+    })
 }

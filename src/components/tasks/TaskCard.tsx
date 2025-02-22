@@ -13,30 +13,20 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { Separator } from "./ui/separator";
 import { PlusIcon } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { deleteTask, toggleComplete } from "@/firebase/tasks";
-import { Badge } from "./ui/badge";
+import { Badge } from "../ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-
-import TaskForm from "./TaskForm";
+import { memo } from "react";
 import EditTaskDialog from "./EditTaskDialog";
+import { Separator } from "../ui/separator";
+import { useFirebaseErrorContext } from "@/context/firebaseErrorContext";
 
 
-export default function TaskCard({ task }: { task: Task }) {
+function TaskCard({ task }: { task: Task }) {
     const { toast } = useToast()
+    const { setError } = useFirebaseErrorContext()
 
     function formatDaysToString(): string {
         let res = ''
@@ -54,16 +44,15 @@ export default function TaskCard({ task }: { task: Task }) {
     }
 
     async function handleToggleComplete() {
-        try {
-            await toggleComplete(task.id, task.isCompleted)
-        } catch (e) {
-            console.log(e);
-        }
+        toggleComplete(task.id, task.isCompleted).catch(e => setError(e))
     }
     async function handleDelete() {
         deleteTask(task.id)
-            .then(success => toast({ title: `${task.title.toUpperCase()} eliminada correctamente` }))
-            .catch(err => toast({ title: `Ocurrio un error eliminando ${task.title}`, variant: 'destructive' }))
+            .then(() => toast({ title: `${task.title.toUpperCase()} eliminada correctamente` }))
+            .catch(e => {
+                toast({ title: `Ocurrio un error eliminando ${task.title}`, variant: 'destructive' })
+                setError(e)
+            })
     }
 
     return (
@@ -102,3 +91,5 @@ export default function TaskCard({ task }: { task: Task }) {
 
     )
 }
+
+export default memo(TaskCard)

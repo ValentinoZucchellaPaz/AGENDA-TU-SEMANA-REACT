@@ -1,4 +1,4 @@
-import TaskContainer from "@/components/TasksContainer";
+import TaskContainer from "@/components/tasks/TasksContainer";
 
 export default function Eventos() {
     return (

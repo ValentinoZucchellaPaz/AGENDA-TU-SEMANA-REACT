@@ -1,15 +1,16 @@
 'use client'
 import AuthContainer from "@/components/AuthContainer";
-import TaskContainer from "@/components/TasksContainer";
-import { useFirebaseContentContext } from "@/context/firebaseContentContext";
+import TaskContainer from "@/components/tasks/TasksContainer";
+import { useUserContext } from "@/context/userContext";
 
 export default function Home() {
-  const { user } = useFirebaseContentContext()
+  const { user, loading } = useUserContext()
 
-  if (user === null) {
-    return <AuthContainer />
-  }
-  return (
-    <TaskContainer />
-  );
+  if (loading) return (
+    <div className="flex justify-center items-center h-[50dvh]">
+      <span className="loader"></span>
+    </div>
+  )
+  if (user === null) return <AuthContainer />
+  return <TaskContainer />
 }

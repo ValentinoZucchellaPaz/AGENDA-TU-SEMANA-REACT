@@ -1,6 +1,7 @@
 import { addDoc, collection, deleteDoc, doc, FirestoreError, getDoc, getDocs, onSnapshot, query, Unsubscribe, updateDoc, where } from "firebase/firestore";
 import { db } from "./config";
 import { Task } from "./types";
+import React from "react";
 
 //get
 export async function getTasks(): Promise<Task[]> {
@@ -51,13 +52,19 @@ export async function updateTask(id: string, updatedTask: Partial<Task>): Promis
 export function listenTasks(
     userMail: string,
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
-    setError: React.Dispatch<React.SetStateAction<FirestoreError | null>>): Unsubscribe {
+    setError: React.Dispatch<React.SetStateAction<FirestoreError | null>>,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+): Unsubscribe {
     const taskRef = collection(db, "tasks")
     const q = query(taskRef, where("creator", "==", userMail))
     return onSnapshot(q, ({ docs }) => {
         const tasks = docs.map(doc => ({ id: doc.id, ...doc.data() })) as Task[]
         setTasks(tasks)
-    }, (error) => setError(error))
+        setLoading(false)
+    }, (error) => {
+        setError(error)
+        setLoading(false)
+    })
 }
 
 //toggle complete
