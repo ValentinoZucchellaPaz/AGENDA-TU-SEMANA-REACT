@@ -1,3 +1,4 @@
+"use client"
 import {
     Dialog,
     DialogClose,
@@ -10,10 +11,14 @@ import { useState } from "react"
 import TaskForm from "./TaskForm"
 import { Button } from "../ui/button"
 
-
-export default function EditTaskDialog({ task }: { task: Task }) {
+export default function EditTaskDialog({ task, onClose }: { task: Task, onClose?: () => void }) {
 
     const [open, setOpen] = useState(false)
+
+    function handleCloseDialog() {
+        setOpen(false)
+        if (onClose) onClose()
+    }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -21,14 +26,11 @@ export default function EditTaskDialog({ task }: { task: Task }) {
                 Editar
             </DialogTrigger>
             <DialogContent>
-                <DialogTitle>{task.title}</DialogTitle>
-                <TaskForm task={task} onFulfilled={() => setOpen(false)}>
-                    <footer className="flex flex-row gap-3 justify-end w-full">
-                        <DialogClose asChild>
-                            <Button type="button" variant='destructive' className="shadow-lg">Cancelar</Button>
-                        </DialogClose>
-                        <Button type="submit" variant='outline' className="shadow-lg">Editar</Button>
-                    </footer>
+                <DialogTitle hidden></DialogTitle>
+                <TaskForm task={task} onFulfilled={handleCloseDialog}>
+                    <DialogClose asChild>
+                        <Button type="button" variant='destructive' className="shadow-lg">Cancelar</Button>
+                    </DialogClose>
                 </TaskForm>
             </DialogContent>
         </Dialog >

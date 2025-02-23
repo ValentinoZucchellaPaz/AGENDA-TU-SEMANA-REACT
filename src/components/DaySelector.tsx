@@ -1,3 +1,4 @@
+"use client"
 import { weekDays } from "@/lib/formValidations";
 import { ChangeEvent, memo, useCallback, useState } from "react";
 import { Label } from "./ui/label";
@@ -52,21 +53,26 @@ function DaySelector({ selectedDays, onChange }: DaySelectorProps) {
             </Button>
             {showDays && (
                 <ul className="flex flex-wrap justify-start">
-                    {weekDays.map((day) => (
-                        <li key={`li-checkbox-${day}`} className="flex flex-row gap-2 m-3">
-                            <input
-                                type="checkbox"
-                                name={day}
-                                id={`checkbox-${day}`}
-                                onChange={handleCheckboxChange}
-                                checked={selectedDays.includes(day)}
-                                className="hover:cursor-pointer"
-                            />
-                            <Label htmlFor={`checkbox-${day}`} className="hover:cursor-pointer">
-                                {day}
-                            </Label>
-                        </li>
-                    ))}
+                    {weekDays.map((day) => {
+                        const randomKey = crypto.randomUUID()
+                        return (
+                            <li key={`li-checkbox-${day}-${randomKey}`}>
+                                <Label htmlFor={`checkbox-${day}-${randomKey}`} className="hover:cursor-pointer flex items-center gap-2 m-3">
+                                    <input
+                                        type="checkbox"
+                                        name={day}
+                                        id={`checkbox-${day}-${randomKey}`}
+                                        onChange={handleCheckboxChange}
+                                        checked={selectedDays.includes(day)}
+                                        className="hover:cursor-pointer"
+                                    />
+                                    <span>
+                                        {day}
+                                    </span>
+                                </Label>
+                            </li>
+                        )
+                    })}
                 </ul>
             )}
         </div>

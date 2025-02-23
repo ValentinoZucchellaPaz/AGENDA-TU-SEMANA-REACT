@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import { Task } from "@/firebase/types"
 import { FormEvent, memo, ReactNode, useState } from "react";
 import { Label } from "../ui/label";
@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useFirebaseErrorContext } from "@/context/firebaseErrorContext";
 import { useUserContext } from "@/context/userContext";
 import DaySelector from "../DaySelector";
+import { Loader2 } from "lucide-react";
 
 interface TaskFormProps {
     children?: ReactNode,
@@ -100,17 +101,15 @@ function TaskForm({ children, task, onFulfilled }: TaskFormProps) {
             </div>
             <DaySelector selectedDays={selectedDays} onChange={setSelectedDays} />
 
-
-            {
-                children ?
-                    children :
-                    <Button type="submit" disabled={loading} variant='outline' className="shadow-lg">
-                        {loading ?
-                            "Cargando..."
-                            : task ? 'Editar' : 'Crear'
-                        }
-                    </Button>
-            }
+            <div className="flex flex-row gap-2">
+                <Button type="submit" disabled={loading} variant='outline' className="shadow-lg">
+                    {loading ?
+                        <Loader2 className="animate-spin h-5 w-5" />
+                        : task ? 'Editar' : 'Crear'
+                    }
+                </Button>
+                {children}
+            </div>
 
         </form>
     )

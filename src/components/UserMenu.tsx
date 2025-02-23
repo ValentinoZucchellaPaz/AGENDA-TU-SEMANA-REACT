@@ -8,13 +8,11 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { useRouter } from "next/navigation"
 import { logout } from "@/firebase/auth"
 import { Button } from "./ui/button"
 
 
 export default function UserMenu({ userMail }: { userMail: string }) {
-    const router = useRouter()
 
     return (
         <Dialog>
@@ -37,7 +35,6 @@ export default function UserMenu({ userMail }: { userMail: string }) {
                     <DialogClose asChild>
                         <Button onClick={() => {
                             logout()
-                            router.push('/')
                         }} variant='destructive'>Salir</Button>
                     </DialogClose>
                 </DialogFooter>

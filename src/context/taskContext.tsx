@@ -16,13 +16,11 @@ export function TaskContextProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         console.log(user);
+        setLoading(true)
 
         if (user?.email) {
             const unsubTasks = listenTasks(user?.email, setTasks, setError, setLoading)
             return () => unsubTasks()
-        } else {
-            setTasks([])
-            setLoading(false)
         }
     }, [user])
 

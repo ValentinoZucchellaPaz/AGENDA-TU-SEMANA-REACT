@@ -1,3 +1,4 @@
+"use client"
 import { Task } from "@/firebase/types";
 import {
     Card,
@@ -18,13 +19,14 @@ import { Button } from "../ui/button";
 import { deleteTask, toggleComplete } from "@/firebase/tasks";
 import { Badge } from "../ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { memo } from "react";
+import { memo, useState } from "react";
 import EditTaskDialog from "./EditTaskDialog";
 import { Separator } from "../ui/separator";
 import { useFirebaseErrorContext } from "@/context/firebaseErrorContext";
 
 
 function TaskCard({ task }: { task: Task }) {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const { toast } = useToast()
     const { setError } = useFirebaseErrorContext()
 
@@ -60,14 +62,14 @@ function TaskCard({ task }: { task: Task }) {
             <Card className="flex flex-col shadow-lg h-full">
                 <CardHeader className="px-4 flex flex-row justify-between items-center py-2">
                     <CardTitle>{task.title}</CardTitle>
-                    <DropdownMenu>
+                    <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                         <DropdownMenuTrigger asChild>
                             <Button variant='ghost' size='sm'>
                                 <PlusIcon />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <EditTaskDialog task={task} />
+                            <EditTaskDialog task={task} onClose={() => setIsDropdownOpen(false)} />
 
                             <DropdownMenuItem onClick={handleToggleComplete}>{task.isCompleted ? 'Descompletar' : 'Completar'}</DropdownMenuItem>
                             <DropdownMenuItem onClick={handleDelete} className="text-red-500">Borrar</DropdownMenuItem>
