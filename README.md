@@ -2,7 +2,7 @@
 
 Este proyecto inicio como mejora de uno hecho con JavaScript vanilla, en el cual además de agregar más features se mejoro otros aspectos de validacion de datos. Aunque aun simple, en el se implementan muchos de los conocimientos de un Fron-End Junior.
 
-Esta hecho con NextJS por lo que al instalar el repositorio los comandos para que funcione van a ser los siguientes:
+Esta hecho con **NextJS** por lo que al instalar el repositorio los comandos para que funcione van a ser los siguientes:
 
 ```bash
 npm run dev
